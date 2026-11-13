@@ -1,0 +1,52 @@
+\section{Preliminaries}\label{sec:prelim}
+
+\paragraph{Groups and oracles.}
+Throughout, $p$ is a prime and $\ell=\lceil\log_2 p\rceil$. A group $G$ of order $p$ with generator $g$ is
+given by encodings of its elements together with algorithms (or oracles) for the group operation,
+inversion and equality. The Diffie--Hellman oracle for $(G,g)$ maps $(g^a,g^b)$ to $g^{ab}$. The discrete
+logarithm problem asks for $a$ given $g^a$. Running times count group operations, oracle calls and bit
+operations. An \emph{advice string} for $p$ is a bit string that may depend on $p$ but not on the group, the
+generator or the instance. We write $L_p(\tfrac12,c)=\exp\bigl((c+o(1))\sqrt{\log p\,\log\log p}\bigr)$.
+
+\paragraph{Black-box fields.}
+Following Boneh and Lipton~\cite{BL96} and Maurer and Raub~\cite{MR07}, a black-box field isomorphic to
+$\F_p$ is an unknown injective encoding $s\colon\F_p\to\{0,1\}^m$ together with oracles that return
+$s(a\pm b)$, $s(ab)$ and $s(a^{-1})$ (for $a\neq 0$) from $s(a)$ and $s(b)$; the encodings $s(0)$ and $s(1)$
+are given, and equality of field elements is equality of encodings. The \emph{extraction problem} asks for
+$a$ given $s(a)$. For an explicit $c\in\F_p$ one computes $s(c)$ from $s(1)$ with $O(\ell)$ additions.
+
+\begin{lemma}[Diffie--Hellman oracles implement black-box fields~\cite{Mau94,BL96,MR07}]\label{lem:dh-bbf}
+Let $G=\langle g\rangle$ have order $p$ and put $s(a)=g^a$. Then addition, subtraction and equality are the
+group operation, inversion and equality of $G$; multiplication is one call to the Diffie--Hellman oracle;
+and inversion, $s(a^{-1})=s(a^{p-2})$, takes at most $2\ell$ oracle calls. In particular, an algorithm that
+solves extraction for black-box fields isomorphic to $\F_p$ with $T$ field operations solves the discrete
+logarithm problem in every group of order $p$ with $O(\ell T)$ group operations and oracle calls.
+\end{lemma}
+
+An \emph{$\F_p$-program with equality tests} computes on field elements (explicit constants and one hidden
+input $a$) with $+$, $-$, $\times$, and division by elements that it has itself tested to be non-zero, and it
+may branch on equality tests between its data. Such a program runs unchanged when $a$ is given only as
+$s(a)$: replace every datum $d$ by $s(d)$, every operation by an oracle call and every test by a comparison
+of encodings. It then outputs the encodings of its results and all of its branch bits.
+Horner evaluation, square-and-multiply, the Tonelli--Shanks square-root algorithm with an explicit
+quadratic non-residue~\cite{Sha73}, and Cantor's algorithm for Jacobians of hyperelliptic
+curves~\cite{Can87} are such programs.
+
+\paragraph{Smooth numbers.}
+An integer $n\ge1$ is \emph{$y$-smooth} if all its prime factors are at most $y$, and
+$\Psi(x,y)=\#\{n\le x: n \text{ is } y\text{-smooth}\}$. We write $u=\log x/\log y$, and $\alpha=\alpha(x,y)$
+for the saddle point, the $\sigma>0$ minimising $x^\sigma\zeta(\sigma,y)$ with
+$\zeta(s,y)=\prod_{q\le y}(1-q^{-s})^{-1}$~\cite{HT86}. For fixed $K>1$ one has
+$\Psi(x,(\log x)^K)=x^{1-1/K+o(1)}$~\cite{dB66,CEP83}.
+
+\paragraph{Genus-2 Jacobians.}
+For a squarefree quintic $f\in\F_p[X]$, the equation $Y^2=f(X)$ defines a curve $C_f$ of genus~2 with one
+point $\infty$ at infinity; $J_f$ denotes its Jacobian. Every class in $J_f(\F_p)$ has a unique
+\emph{reduced Mumford representation} $(u,v)$: $u,v\in\F_p[X]$, $u$ monic, $\deg v<\deg u\le2$, and
+$u\mid v^2-f$~\cite{Can87}. An affine point $(a,b)\in C_f(\F_p)$ gives the class $[(a,b)-\infty]$ with
+representation $(X-a,\,b)$. Cantor's algorithm adds two reduced representations with $O(1)$ field
+operations, among them $O(1)$ inversions. The group $J_f(\F_p)$ has order in
+$[(\sqrt p-1)^4,(\sqrt p+1)^4]$ and is a product of at most four cyclic groups, since for every prime $q$ the
+$q$-torsion of $J_f(\overline{\F}_p)$ has rank at most~4~\cite{Mum70}. If $f$ has leading coefficient $c$,
+then $\tilde f(X)=c^{-6}f(cX)$ is monic and $(X,Y)\mapsto(cX,c^3Y)$ is an isomorphism
+$C_{\tilde f}\to C_f$ over $\F_p$, so we may take $f$ monic.

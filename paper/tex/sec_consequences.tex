@@ -1,0 +1,83 @@
+\section{Consequences}\label{sec:consequences}
+
+All reductions in this section are generic: in $G$ they use only the group operation, equality tests and the
+oracle, and their other computations do not depend on how $G$ is encoded.
+
+\subsection{Imperfect adversaries}
+A security proof turns an adversary that solves Diffie--Hellman on some fraction of inputs into a
+discrete-logarithm algorithm. Following Maurer and Wolf~\cite{MW96}, call $\mathcal O$ an
+\emph{$\varepsilon$-Diffie--Hellman oracle} for $(G,g)$ if its output distribution on a given input does not
+depend on earlier calls (it is time-invariant) and, on uniformly random input $(g^u,g^v)$, it returns $g^{uv}$
+with probability at least $\varepsilon$, over the input and its own coins. A fixed
+probabilistic algorithm run with fresh coins on each call is such an oracle.
+
+\begin{corollary}\label{cor:imperfect}
+Let $G=\langle g\rangle$ have prime order $p$ and let $\mathcal O$ be an $\varepsilon$-Diffie--Hellman oracle
+for $(G,g)$. Given $\sigma_p$ and $\varepsilon$, discrete logarithms in $G$ are computed with an expected
+$O(\ell^3\varepsilon^{-4}\log(\ell/\varepsilon))$ calls to $\mathcal O$ and $\mathrm{poly}(\ell,1/\varepsilon)$
+further operations.
+\end{corollary}
+
+\begin{proof}
+For every cyclic group of known order and every $\beta>0$, Maurer and Wolf~\cite[Thm.~1]{MW96} build from
+$\mathcal O$ a Diffie--Hellman oracle that makes $O(\log(1/(\beta\varepsilon))/\varepsilon^4)$ calls to
+$\mathcal O$ per query and answers each query correctly with probability at least $1-\beta$. The reduction of
+Theorem~\ref{thm:main} makes $O(\ell^3)$ oracle calls in expectation; by Markov's inequality it makes at most
+$T=O(\ell^3)$ calls with probability at least $5/6$, and each round is stopped after $T$ calls. With
+$\beta=1/(6T)$ all answers in a round are correct with probability at least $5/6$, so a round succeeds with
+probability at least $2/3$; the output $a$ is checked by computing $g^a$, and the round is repeated on
+failure, at most $3/2$ times in expectation.
+\end{proof}
+
+\subsection{A characterisation for cyclic groups}
+Let $n\ge2$ and let $q(n)$ be the largest prime $q$ with $q^2\mid n$, or $q(n)=1$ if $n$ is squarefree. Write
+$\mathrm{GC}(n)$ for the least expected running time of a non-uniform generic reduction computing discrete
+logarithms from a Diffie--Hellman oracle in cyclic groups of order $n$, in the sense of
+Wolf~\cite[\S10.1]{Wol99}.
+
+\begin{theorem}\label{thm:char}
+$\sqrt{q(n)}/2-1\le\mathrm{GC}(n)\le(\log n)^{O(1)}\bigl(1+\sqrt{q(n)}\bigr)$. In particular discrete logarithm
+and Diffie--Hellman are non-uniformly generically polynomial-time equivalent in cyclic groups of order $n$ if
+and only if $q(n)\le(\log n)^{O(1)}$.
+\end{theorem}
+
+\begin{proof}
+\emph{Upper bound.} The advice is the factorisation of $n$ and the strings $\sigma_q$ for the primes
+$q\,\|\,n$, $O(\log n)$ bits in all. Pohlig--Hellman reduces discrete logarithms in $G$ to the subgroups of
+prime-power order. For $q\,\|\,n$ put $h=g^{n/q}$; then $\DH_g(h^a,h^b)=h^{(n/q)ab}$, and raising to
+$(n/q)^{-1}\bmod q$ gives a Diffie--Hellman oracle for $\langle h\rangle$, to which Theorem~\ref{thm:main}
+applies with $\sigma_q$. For $q^e\,\|\,n$ with $e\ge2$, each of the $e$ base-$q$ digits costs $O(\sqrt q)$ by
+baby-step giant-step.
+
+\emph{Lower bound.} Maurer and Wolf~\cite{MW98}, \cite[Cor.~10.9]{Wol99}: every generic reduction of discrete
+logarithms to a Diffie--Hellman oracle in cyclic groups of order $n$ has expected running time at least
+$\sqrt q/2-1$, where $q$ is the largest prime with $q^2\mid n$.
+\end{proof}
+
+Wolf proved the equivalence statement~\cite[Thm.~10.10]{Wol99} under his Smoothness Assumption~1, which asks
+for elliptic curves of polylogarithmically smooth order over every prime field.
+
+\subsection{Black-box fields}
+The algorithms of Sections~\ref{sec:reduction} and~\ref{sec:fewer} are $\F_p$-programs run on encodings
+(Section~\ref{sec:prelim}), so they solve extraction for black-box fields isomorphic to $\F_p$ with the same
+costs counted in field operations; Lemma~\ref{lem:dh-bbf} is only the translation back to groups. Maurer and
+Raub~\cite[Lemma~2]{MR07} state this under ``a (plausible) number-theoretic conjecture'' and reduce the
+problems for extension fields to it. They prove the consequences below for small characteristic, and for
+large characteristic against non-uniform adversaries under the smoothness assumption
+of~\cite{Mau94,MW99}.
+
+\begin{corollary}\label{cor:bbf}
+For every prime $p$ and every black-box field of characteristic $p$ and degree $k$ over $\F_p$, the
+representation, extraction and isomorphism problems are solvable in time $\mathrm{poly}(k,\log p)$ with
+$O(\log p)$ bits of advice depending only on $p$. Consequently, for finite fields whose characteristic is fixed
+by the security parameter or chosen by the adversary, there is no field-homomorphic one-way permutation, and
+no field-homomorphic encryption scheme that permits equality tests is one-way, against non-uniform
+polynomial-time adversaries; in the private-key case plaintexts are recovered up to field isomorphism.
+\end{corollary}
+
+\begin{proof}
+Maurer and Raub~\cite[Thm.~1, Cor.~2--3]{MR07} reduce these problems efficiently to the representation problem
+for $\F_p$, which for $\F_p$ generated by $1$ is extraction; the black-box field form of
+Theorem~\ref{thm:main} above solves extraction with $\sigma_p$. For the second part, such a scheme
+instantiates a black-box field and extraction inverts it~\cite[Cor.~1, \S4]{MR07}.
+\end{proof}

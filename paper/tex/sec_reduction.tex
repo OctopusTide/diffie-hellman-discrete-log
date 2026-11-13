@@ -1,0 +1,72 @@
+\section{The reduction}\label{sec:reduction}
+
+This section proves Theorem~\ref{thm:main} from Proposition~\ref{prop:goodcurve}. Fix $K$ and
+$y=(\log x)^K$ with $x=p^2-\tfrac12p^{3/2}$ as in Proposition~\ref{prop:goodcurve}; note
+$y\le(2\ell)^K$. For the finitely many primes below the threshold of Proposition~\ref{prop:goodcurve} the
+algorithm uses exhaustive search.
+
+\subsection{The advice}
+Let $f$ be a monic quintic with non-zero discriminant such that $J=J_f(\F_p)$ has $y$-smooth order $N$. Write
+$J=\bigoplus_{i=1}^4\langle B_i\rangle$ with $B_i$ of order $n_i$ and $n_1\mid n_2\mid n_3\mid n_4$ (some
+$n_i$ may be~1), and let $\xi$ be a quadratic non-residue modulo~$p$. The advice is
+\[
+\sigma_p=\bigl(f;\ (u_i,v_i)_{i\le4};\ n_1,\dots,n_4;\ \xi\bigr),
+\]
+where $(u_i,v_i)$ is the Mumford representation of $B_i$. It has at most
+$5\ell+4(4\ell+2)+4(2\ell+1)+\ell=30\ell+12$ bits and depends only on~$p$. From it the algorithm computes
+$N=n_1n_2n_3n_4$ and factors $N$ by trial division up to $y$.
+
+\subsection{Step 1: putting the hidden element on the curve}
+This is Maurer's embedding~\cite{Mau94}, as adapted to genus~2 by Wolf and by Koblitz, Menezes and
+Shparlinski~\cite{Wol99,KMS10}. Given $s(a)$, pick $r\in\F_p$ at random, form $s(a')$ with $a'=a+r$, and
+compute $s(w)$ for $w=f(a')$ and $s(w^{(p-1)/2})$. If $w=0$ put $b=0$; if $w^{(p-1)/2}=1$ compute $s(b)$ with
+$b^2=w$ by Tonelli--Shanks with the explicit $\xi$; otherwise pick a new $r$. Now $D=(X-a',\,b)$, held
+implicitly, is the reduced representation of $[(a',b)-\infty]\in J$.
+
+The affine curve has $p-t$ points with $|t|\le4\sqrt p$ by Weil's bound, so the number of $r$ with
+$f(a+r)$ a square or zero is at least $(p-4\sqrt p)/2\ge p/3$ for $p\ge150$. Hence at most three trials are
+expected, each with $O(\ell)$ field operations, followed by one square root with $O(\ell^2)$.
+
+\subsection{Step 2: Pohlig--Hellman with a hidden target}
+The core of the reduction is the following routine. It is the textbook digit-by-digit method written for a
+non-cyclic group whose basis is known explicitly while the target is known only implicitly.
+
+\begin{lemma}\label{lem:ph}
+Let $H=\bigoplus_{i=1}^m\langle C_i\rangle$ be a finite abelian $q$-group with $C_i$ of order $q^{f_i}$,
+$m\le4$ and $f=\max_i f_i$. Given the $C_i$ explicitly and $R\in H$ implicitly, one finds
+$\kappa_i\in[0,q^{f_i})$ with $R=\sum_i\kappa_iC_i$ using $O(f^2\log q)$ operations on implicit elements,
+$O(f^2\log q+q^m)$ operations on explicit elements, and at most $fq^m$ comparisons between an implicit
+and an explicit element.
+\end{lemma}
+
+\begin{proof}
+Compute $R_j=q^jR$ for $0\le j<f$. We find, for $j=f,f-1,\dots,0$, integers
+$\kappa_i^{(j)}\in[0,q^{\max(f_i-j,0)})$ with $q^jR=\sum_i\kappa_i^{(j)}q^jC_i$; for $j=f$ all are zero.
+Given the $\kappa_i^{(j+1)}$, put $\Delta=R_j-\sum_i\kappa_i^{(j+1)}q^jC_i$. Then $q\Delta=0$ and
+$\Delta\in q^jH=\bigoplus_{f_i>j}\langle q^jC_i\rangle$. The $q$-torsion of the cyclic group
+$\langle q^jC_i\rangle$ is $\langle q^{f_i-1}C_i\rangle$, so $\Delta=\sum_{f_i>j}c_iq^{f_i-1}C_i$ for a unique
+$(c_i)\in[0,q)^{m}$, which we find by comparing $\Delta$ with the at most $q^m$ explicit candidates. Put
+$\kappa_i^{(j)}=\kappa_i^{(j+1)}+c_iq^{f_i-1-j}$ for $f_i>j$. Then $\kappa_i^{(j)}<q^{f_i-j}$ and
+$\sum_i\kappa_i^{(j)}q^jC_i=(R_j-\Delta)+\Delta=R_j$. The candidate sets depend only on
+$\{i:f_i>j\}$, so at most $m+1$ of them are built.
+\end{proof}
+
+Comparisons between an implicit and an explicit class are sound because reduced representations are unique.
+
+For each prime $q\mid N$ with $q^e\,\|\,N$, put $N_q=N/q^e$, compute $D_q=N_qD$ implicitly and $C_{i,q}=N_qB_i$
+explicitly. Since $N_q$ is prime to $q$, $C_{i,q}$ has order $q^{v_q(n_i)}$ and the $q$-Sylow subgroup of $J$
+is $\bigoplus_i\langle C_{i,q}\rangle$. Lemma~\ref{lem:ph} gives $\kappa_{i,q}$ with
+$D_q=\sum_i\kappa_{i,q}C_{i,q}$.
+
+\subsection{Step 3: reading off the answer}
+By the Chinese remainder theorem take $k_i\in[0,n_i)$ with $k_i\equiv\kappa_{i,q}\pmod{q^{v_q(n_i)}}$ for every
+$q$, and compute $E=\sum_ik_iB_i$ explicitly. For every $q$ we have $N_q(D-E)=D_q-\sum_ik_iC_{i,q}=0$, so the order
+of $D-E$ divides $\gcd_qN_q=1$ and $E=D$. By uniqueness, $E=(X-a',b)$; the algorithm reads off $a'$ and outputs
+$a=a'-r$.
+
+\subsection{Running time}
+Step~1 costs $O(\ell^2)$ field operations in expectation. In Step~2, $\sum_q e_q\log q=\log N\le2\ell+1$, so all
+implicit Jacobian arithmetic takes $O(\ell^2)$ group operations in $J$, hence $O(\ell^2)$ field operations; the
+comparisons number at most $\sum_qe_qq^4\le(2\ell+1)y^4$, each needing $O(1)$ explicit constants. Step~3 is
+explicit. Through Lemma~\ref{lem:dh-bbf} the total is $O(\ell^2y^4)$ group operations and $O(\ell^3)$ oracle
+calls, that is $O(\ell^{4K+3})$. This proves Theorem~\ref{thm:main}.

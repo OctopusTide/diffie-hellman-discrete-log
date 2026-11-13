@@ -1,0 +1,72 @@
+\section{Smooth numbers in short intervals}\label{sec:smooth}
+
+\begin{theorem}\label{thm:smooth}
+Let $0<\delta\le\tfrac12$ and suppose $\zeta(s)\neq0$ for $\operatorname{Re}s>1-\delta$. Let
+$17/30<\theta\le1$ and
+\[
+K>K^*(\theta,\delta):=\frac{13+30\delta}{\delta\,(30\theta-17)} .
+\]
+There are $\varepsilon_0>0$, $C$ and $x_0$, depending only on $\delta,\theta,K$, such that for all $x\ge x_0$,
+$x^\theta\le h\le x$ and $(\log x)^K\le y\le x^{\varepsilon_0}$,
+\begin{equation}\label{eq:asym}
+\left|\frac{\Psi(x+h,y)-\Psi(x,y)}{\alpha\,(h/x)\,\Psi(x,y)}-1\right|
+\le C\left(\frac1u+\frac hx\cdot\frac{\log(u+1)}{\log y}\right),
+\end{equation}
+and in particular $\Psi(x+h,y)-\Psi(x,y)\ge\tfrac13\,h\,\Psi(x,y)/x$.
+\end{theorem}
+
+Theorem~\ref{thm:smooth} also gives the hyperelliptic curve method of Lenstra, Pila and Pomerance a proved
+running time $L_p(\tfrac12,2)(\log n)^{O(1)}$ for splitting an integer $n$ whose least prime factor is
+$p$~\cite{Comp26b}.
+
+We apply Theorem~\ref{thm:smooth} with the half-plane of~\cite{OAI26}:
+
+\begin{theorem}[\cite{OAI26}]\label{thm:qrh}
+$\zeta(s)\neq0$ for $\operatorname{Re}s>7/8$.
+\end{theorem}
+
+Any fixed $\delta>0$ suffices for every result in this paper; only the smoothness exponent $K$, and hence the
+degree of the polynomial in Theorem~\ref{thm:main}, depends on it.
+
+\paragraph{How the proof goes.}
+Perron's formula writes $\Psi(x+h,y)-\Psi(x,y)$ as $\frac1{2\pi i}\int\zeta(s,y)\frac{(x+h)^s-x^s}{s}\,ds$
+over a vertical segment through the saddle point $\alpha$, with height $H=x^{1+1/K+\varepsilon_1}/h$. As in
+Younis~\cite{You24} and Zhang~\cite{Zha26}, the segment is moved onto a contour that stays on
+$\operatorname{Re}s=\alpha$ near the real axis, bends left along an exponential path, wraps around each zero
+of $\zeta$ at a distance proportional to its distance from the line $\operatorname{Re}s=1$, and otherwise runs
+along $\operatorname{Re}s=(1+\varepsilon)/2$ for a small fixed $\varepsilon>0$. The integrand is holomorphic
+in $\operatorname{Re}s>0$. The central part gives the main term $\alpha(h/x)\Psi(x,y)$ by the saddle-point
+method of Hildebrand and Tenenbaum~\cite{HT86}. Elsewhere one needs a saving over $x^\alpha\zeta(\alpha,y)$,
+and it comes from moving left: as long as no zero is near, $|x^s\zeta(s,y)|$ drops by
+$x^{-(1-\varepsilon)(\alpha-\sigma)}$ when $\operatorname{Re}s$ drops from $\alpha$ to $\sigma$
+(Lemma~\ref{lem:shift}). This local shift holds for \emph{every} $y\ge2$. Earlier versions required
+$y\ge\exp((\log\log x)^2)$ or a saddle point within $\varepsilon\delta$ of the line $\operatorname{Re}s=1$;
+without these conditions $y$ can be polylogarithmic, and then the saddle point sits about $1/K$ from the
+line. A zero at distance $\nu\ge\delta$ from the line costs $x^{(1-\alpha)-(1-\varepsilon)^2\nu}$, there are
+at most $T^{(30/13)\nu}=x^{(30/13)(1-\theta+1/K)\nu}$ of them, and the sum over zeros is small once
+$K>K^*(\theta,\delta)$. The full proof is in Appendix~\ref{app:smooth}.
+
+\paragraph{From smooth numbers to good curves.}
+\begin{theorem}[{Lenstra, Pila, Pomerance~\cite[Thm.~1.1]{LPP02}}]\label{thm:lpp}
+Let $p>8100$ be prime. For all but at most $p$ integers $z$ in $[p^2-\tfrac12p^{3/2},\,p^2+\tfrac12p^{3/2}]$
+there are at least $p^{9/2}/(24000\log(p^2)\log\log(p^2))$ quintic polynomials $f\in\F_p[X]$ with non-zero
+discriminant such that $\#J_f(\F_p)=z$.
+\end{theorem}
+
+\begin{proposition}\label{prop:goodcurve}
+Let $K_0=25$, fix $K\ge K_0$, and put $x=p^2-\tfrac12p^{3/2}$ and $y=(\log x)^K$. For all sufficiently large
+primes $p$, the interval $(x,x+p^{3/2}]$ contains $S_p\ge p^{3/2-2/K-o(1)}>2p$ integers that are $y$-smooth,
+and there is a monic quintic $f\in\F_p[X]$ with non-zero discriminant such that $\#J_f(\F_p)$ is $y$-smooth.
+\end{proposition}
+
+\begin{proof}
+Apply Theorems~\ref{thm:smooth} and~\ref{thm:qrh} with $\delta=1/8$, $\theta=3/4$ and $h=p^{3/2}$; then
+$x^{3/4}<h\le x$ because $x<p^2$, and $K>K^*=268/11$. By the estimate
+$\Psi(x,(\log x)^K)=x^{1-1/K+o(1)}$ of Section~\ref{sec:prelim} and $x\le p^2$, Theorem~\ref{thm:smooth} gives
+$S_p\ge\tfrac13p^{3/2}x^{-1/K-o(1)}\ge p^{3/2-2/K-o(1)}$, which exceeds $2p$ for large $p$ because
+$K\ge K_0>4$. At most $p$ of these integers are exceptional in Theorem~\ref{thm:lpp}, so one of them is
+$\#J_f(\F_p)$ for some quintic $f$, which can be made monic as in Section~\ref{sec:prelim}.
+\end{proof}
+
+We call a quintic $f\in\F_p[X]$, and its coefficient vector, \emph{good} if its discriminant is non-zero and
+$\#J_f(\F_p)$ is $y$-smooth.

@@ -1,0 +1,200 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+\usepackage[expansion=false]{microtype}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\DH}{\mathrm{DH}}
+
+\title{A Little Advice Suffices:\\ Diffie--Hellman Is as Hard as Discrete Logarithm}
+\newif\ifanon
+\anonfalse % \anontrue gives the anonymous version for double-blind submission
+\ifanon
+\author{Anonymous}
+\else
+\author{Yuwen Zhou\\[2pt] \normalsize University of British Columbia Okanagan\\
+\normalsize\texttt{zhouyw07@student.ubc.ca}}
+\fi
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Is computing a Diffie--Hellman key as hard as computing a discrete logarithm? Maurer showed that it is,
+given a few bits of advice, provided that short intervals contain enough integers with only small prime
+factors; that proviso has stood for thirty years. We remove it. For every prime $p$ there is an advice
+string of $O(\log p)$ bits, depending only on $p$, with which discrete logarithms in every group of order $p$
+are computed in polynomial time from a Diffie--Hellman oracle. The reduction is the classical one; what was
+missing was a proof that short intervals contain polylogarithmically smooth integers. We show that a
+zero-free half-plane for the Riemann zeta function, which is now known, gives the expected number of
+$(\log x)^K$-smooth integers in every interval $[x,x+x^\theta]$ with $\theta>17/30$. With smoothness this
+small the saddle point of the counting integral lies just to the left of the line $\operatorname{Re}s=1$,
+and a zero-free strip of any fixed width absorbs the shift once $K$ is large. Genus-2 Jacobians, whose
+orders fill such intervals, then turn one of these integers into the order of an auxiliary group. The same
+input removes the smoothness assumption from Maurer and Raub's impossibility of field-homomorphic one-way
+permutations and from the yes/no-query reduction of Koblitz, Menezes and Shparlinski. It also makes Wolf's
+characterisation unconditional: discrete logarithm and Diffie--Hellman are generically equivalent exactly
+when the group order has no large repeated prime factor.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+The Diffie--Hellman protocol~\cite{DH76} is secure only if the \emph{computational Diffie--Hellman problem}
+is hard: given $g^a$ and $g^b$ in a cyclic group, compute $g^{ab}$. What cryptographers actually believe
+hard in the groups they deploy is the \emph{discrete logarithm problem}: given $g^a$, compute $a$. A
+discrete-logarithm algorithm breaks Diffie--Hellman at once. Whether the converse holds, so that the
+protocol is exactly as secure as discrete logarithms, has been asked since the protocol appeared.
+
+The known answers all follow one idea, due to den Boer~\cite{dB88} and Maurer~\cite{Mau94}. A
+Diffie--Hellman oracle lets one multiply hidden exponents, so the hidden $a$ can be treated as an element of
+a field one can compute with but cannot read. Put $a$ into an auxiliary algebraic group over $\F_p$ whose
+order has only small prime factors, solve the discrete logarithm there by Pohlig--Hellman, and read $a$ back.
+Everything works once such an auxiliary group exists. Maurer used elliptic curves, whose orders fill the
+interval $[p+1-2\sqrt p,\,p+1+2\sqrt p]$, and needed this interval to contain a polylogarithmically smooth
+integer, which is still unknown. Maurer and Wolf~\cite{MW99,Wol99}, Boneh and Lipton~\cite{BL96}, and Maurer
+and Raub~\cite{MR07} built on the same assumption.
+
+Without it, the best reduction ran in time
+$\exp((\log p)^{2/3+o(1)})$~\cite{Wol99,MW00}. Under the Riemann Hypothesis, Koblitz, Menezes and
+Shparlinski~\cite{KMS10} reached $\exp(O(\sqrt{\log p\log\log p}))$ with the help of $\varepsilon\log p$
+answers from an all-knowing oracle; they called a polynomial-time reduction a ``holy grail'' that ``seems a
+long way off'', and named the missing input: smooth numbers in short intervals for smoothness bounds below
+$\exp(\sqrt{\log x})$.
+
+\paragraph{The missing input.}
+Genus-2 Jacobians widen the window. Their orders over $\F_p$ fill
+$[p^2-\tfrac12p^{3/2},\,p^2+\tfrac12p^{3/2}]$, an interval of the form $[x,x+x^{3/4}]$, and Lenstra, Pila and
+Pomerance~\cite{LPP02} showed that all but at most $p$ integers there are such orders. Elliptic curves give
+only intervals of the form $[x,x+4x^{1/2}]$. What is needed is
+more than $p$ integers in that window whose prime factors are all at most $(\log p)^{K}$. Unconditional
+methods give smooth numbers in $[x,x+x^\theta]$ only for smoothness bounds
+$y\ge\exp((\log x)^{2/3+o(1)})$, because they rely on the Vinogradov--Korobov zero-free region. Younis
+recently reached $y=(\log x)^K$ under the Riemann Hypothesis~\cite{You24}.
+
+\paragraph{A zero-free half-plane suffices.}
+We prove that any half-plane $\operatorname{Re}s>1-\delta$ free of zeros of $\zeta$ is enough
+(Theorem~\ref{thm:smooth}): for every $\theta>17/30$ and every fixed $K$ above a threshold depending on
+$\theta$ and $\delta$, the number of $y$-smooth integers in $[x,x+h]$, $y=(\log x)^K$, is asymptotic to the
+count predicted by the density of $y$-smooth integers near $x$ whenever $x^\theta\le h=o(x)$. This range
+contains the genus-2 window, $\theta=3/4$, but not the elliptic-curve window, $\theta=1/2$. Such a
+half-plane, with $\delta=1/8$, is now known~\cite{OAI26}, so our results are unconditional. The count is a
+contour integral of $\zeta(s,y)x^s$, which one shifts to the left of the saddle point $\alpha\approx1-1/K$. A
+zero of $\zeta$ at distance $\nu$ from the line $\operatorname{Re}s=1$ costs a factor $x^{(1-\alpha)-\nu}$,
+the half-plane guarantees $\nu\ge\delta$, and the zero-density estimate of Guth and Maynard~\cite{GM24}
+bounds how many zeros there are. Polylogarithmic smoothness moves the saddle point only about $1/K$ from the
+line, and the strip $1-\delta<\operatorname{Re}s<1$ absorbs this once $K$ is large in terms of $\delta$.
+Earlier arguments placed the saddle point deep inside the zero-free region, which forced much larger
+$y$~\cite{Zha26}; what lets it leave that region is a local shift bound that holds for every $y\ge2$
+(Lemma~\ref{lem:shift} in Appendix~\ref{app:smooth}).
+
+\paragraph{Results.}
+With this input, Maurer's method goes through with genus-2 Jacobians.
+
+\begin{theorem}\label{thm:main}
+There are a constant $c$ and a probabilistic algorithm $\mathcal A$ with the following property. For every
+prime $p$ there is an advice string $\sigma_p$ of at most $30\lceil\log_2p\rceil+12$ bits such that for every
+cyclic group $G$ of order $p$, every generator $g$ and every $a$, the algorithm $\mathcal A$ given $p$,
+$\sigma_p$, $g^a$ and a Diffie--Hellman oracle for $(G,g)$ outputs $a$ in expected time $O((\log p)^c)$.
+\end{theorem}
+
+The advice depends only on $p$: one string serves every group of order $p$, for instance every elliptic
+curve group of that order, and every generator. Sections~\ref{sec:fewer} and~\ref{sec:consequences} derive
+the following.
+\begin{itemize}
+\item \emph{Imperfect adversaries.} An algorithm that solves Diffie--Hellman on a fraction $\varepsilon$ of
+  inputs yields discrete logarithms in time $\mathrm{poly}(\log p,1/\varepsilon)$
+  (Corollary~\ref{cor:imperfect}).
+\item \emph{A complete characterisation.} In cyclic groups of order $n$, the generic non-uniform complexity
+  of computing discrete logarithms from a Diffie--Hellman oracle lies between $\sqrt q/2-1$ and
+  $(\log n)^{O(1)}(1+\sqrt q)$, where $q$ is the largest prime with $q^2\mid n$
+  (Theorem~\ref{thm:char}). Wolf proved this dichotomy under his smoothness assumption~\cite{Wol99}.
+\item \emph{Black-box fields.} Extraction from a black-box field is polynomial-time with advice for every
+  finite field. So, for characteristic fixed by the security parameter, there are no field-homomorphic
+  one-way permutations against non-uniform adversaries (Corollary~\ref{cor:bbf}); Maurer and Raub proved
+  this for small characteristic~\cite{MR07}.
+\item \emph{Less advice.} With $\varepsilon\log p$ yes/no queries instead of advice the reduction is still
+  polynomial (Theorem~\ref{thm:eps}); with a one-time precomputation of $p^{\varepsilon}$ steps per prime it
+  costs $(\log p)^{O(1/\varepsilon)}$ per instance (Corollary~\ref{cor:precomp}); with no help at all it takes
+  $\exp(O(\sqrt{\log p\log\log p}))$ (Theorem~\ref{thm:uniform}).
+\end{itemize}
+
+\paragraph{Contributions.}
+\begin{itemize}
+\item \emph{A theorem on smooth numbers.} A zero-free half-plane for $\zeta$ gives the expected count of
+  polylogarithmically smooth integers in short intervals.
+\item \emph{An unconditional equivalence.} Discrete logarithm and Diffie--Hellman are polynomially
+  equivalent in every group of prime order, with logarithmic advice that depends only on the order, and the
+  classical consequences of this equivalence hold without assumptions.
+\item \emph{An explanation.} The reduction was never the obstacle; the existence of smooth group orders was.
+  A zero-free strip of any fixed width provides them, because polylogarithmic smoothness keeps the saddle
+  point close to the line $\operatorname{Re}s=1$.
+\end{itemize}
+
+\paragraph{Technical overview.}
+The reduction (Section~\ref{sec:reduction}) is Maurer's, written for genus~2 as in~\cite{Wol99,KMS10}. A
+Diffie--Hellman oracle turns the group into a black-box field: $g^a$ represents $a$, the group operation adds,
+the oracle multiplies, and inversion is exponentiation by $p-2$. The advice names a genus-2 curve
+$Y^2=f(X)$ whose Jacobian $J$ has $(\log p)^K$-smooth order, together with a basis of $J(\F_p)$. The
+algorithm shifts $a$ by a random $r$ until $f(a+r)$ is a square, takes an implicit square root, and so holds
+the point $(a+r,b)$ of the curve, hence the class $D=[(a+r,b)-\infty]\in J(\F_p)$, in encoded form. Cantor's
+algorithm runs on encoded coordinates. A Pohlig--Hellman routine for a non-cyclic group with an explicit
+basis and an encoded target writes $D$ in the basis; the explicit representation of $D$ then shows $a+r$.
+Section~\ref{sec:smooth} and Appendix~\ref{app:smooth} prove the smooth-number theorem, from which
+Section~\ref{sec:smooth} derives Proposition~\ref{prop:goodcurve}; this is the only place where analytic
+number theory enters.
+
+\paragraph{Related work.}
+Den Boer~\cite{dB88} proved the equivalence for primes $p$ with $p-1$ smooth. Maurer~\cite{Mau94} and Maurer and
+Wolf~\cite{MW96,MW99,MW00} introduced auxiliary groups, advice, and the amplification of faulty oracles, and
+proved generic lower bounds for orders with repeated prime factors~\cite{MW98}; Wolf's thesis~\cite{Wol99}
+collects these results and the genus-2 variant. Boneh and Lipton~\cite{BL96} introduced black-box fields and a
+uniform subexponential algorithm under a smoothness assumption; Maurer and Raub~\cite{MR07} treated extension
+fields. Koblitz, Menezes and Shparlinski~\cite{KMS10} studied reductions with auxiliary oracles, and May and
+Schneider~\cite{MS23} gave concrete reductions for standardised curves. Lenstra, Pila and
+Pomerance~\cite{LPP93,LPP02} introduced genus-2 Jacobians to obtain rigorous smoothness tests. On smooth numbers
+in short intervals, Soundararajan~\cite{Sou10} and Matom\"aki and Radziwi\l\l~\cite{MR16} treat large smoothness
+bounds, Younis~\cite{You24} the polylogarithmic range under the Riemann Hypothesis (our proof makes his
+constant explicit, Appendix~\ref{app:smooth}), and Zhang~\cite{Zha26} a fixed zero-free strip for
+$y=\exp(\sqrt{\log x\log\log x})$. Our reduction is the classical one; what is new is the proof that the
+auxiliary groups exist.
+
+\input{sec_prelim}
+\input{sec_smooth}
+\input{sec_reduction}
+\input{sec_fewer}
+\input{sec_consequences}
+
+\section{Limitations and conclusion}\label{sec:conclusion}
+The reduction is non-uniform: the advice names a curve for each characteristic, so the characteristic must
+be fixed in advance, and finding a curve without advice costs $p^{2/K}$ trials, or subexponential time after
+optimising $K$ (Theorem~\ref{thm:uniform}). A uniform polynomial-time reduction would need an efficient
+construction of algebraic groups over $\F_p$ with polylogarithmically smooth order; Wolf conjectured that,
+for general group orders, this is as hard as factoring~\cite[Conj.~10.1]{Wol99}. The constants are very
+large: for $\delta=1/8$ the smoothness exponent is $K=25$ and the polynomial has degree about $4K$, so the
+result says nothing about concrete security at cryptographic sizes.
+
+Discrete logarithm and Diffie--Hellman are equivalent in every group of prime order, given $O(\log p)$ bits
+that depend only on $p$. The obstacle was never the reduction but the distribution of smooth numbers, and a
+zero-free half-plane is enough to supply them.
+
+\section*{Use of AI}
+The text and the proofs of this paper were generated mainly by artificial-intelligence systems (large
+language models), working under the direction of the author. This includes the consistency checks that the
+arguments went through during their preparation.
+
+\appendix
+\input{app_smooth}
+
+\bibliographystyle{alpha}
+\bibliography{refs}
+\end{document}

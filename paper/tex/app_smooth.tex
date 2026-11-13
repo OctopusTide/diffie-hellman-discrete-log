@@ -1,0 +1,197 @@
+\section{Proof of Theorem~\ref{thm:smooth}}\label{app:smooth}
+
+\paragraph{Notation.}
+$L=\log x$, $S=\log y$, $u=L/S$, $Z_y(s)=\zeta(s,y)=\prod_{q\le y}(1-q^{-s})^{-1}$, $\alpha=\alpha(x,y)$ the
+saddle point, $a_0=1-\alpha$, $W=x^\alpha Z_y(\alpha)$, $r=h/x$, and
+$N(\sigma,T)=\#\{\rho=\beta+i\gamma:\zeta(\rho)=0,\ \beta\ge\sigma,\ |\gamma|\le T\}$.
+
+\paragraph{Inputs from the literature.}
+\begin{itemize}
+\item[(I1)] $W\ll\Psi(x,y)\sqrt{LS}$ for $\log x<y\le x$~\cite[(1.3)]{You24}.
+\item[(I2)] $a_0S=\log(u\log(u+1))+O(1)$ for $\log x<y\le x$~\cite[Lemma~2]{HT86}, \cite[(1.5)]{You24}. Hence
+  there are absolute constants $0<c_*\le C_*$ with $c_*u\log(u+1)\le y^{a_0}\le C_*u\log(u+1)$ and
+  $a_0S\le C_*\log(u+1)$, and $a_0S\ge1$ for $u$ large.
+\item[(I3)] For fixed $\varrho>0$, $y\ge y_0(\varrho)$ with $\log x<y\le x$, and $1/S<|t|\le\exp(S^{3/2-\varrho})$,
+  \[
+  |Z_y(\alpha+it)|\le C_\varrho Z_y(\alpha)\exp\bigl(-c_0u\,t^2/(a_0^2+t^2)\bigr)
+  \]
+  \cite[Lemma~8]{HT86}, \cite[(1.6)]{You24}; we use $\varrho=1/10$.
+\item[(I4)] For $2\le y,h,H\le x$~\cite[(1.9)]{You24},
+  \[
+  \Psi(x+h,y)-\Psi(x,y)=\frac1{2\pi i}\int_{\alpha-iH}^{\alpha+iH}Z_y(s)\frac{(x+h)^s-x^s}{s}\,ds+O(xL/H).
+  \]
+\item[(I5)] With $I_0$ the segment from $\alpha-i/S$ to $\alpha+i/S$~\cite[Lemma~12]{HT86},
+  \cite[Lemma~3.6]{You24},
+  \[
+  \frac1{2\pi i}\int_{I_0}Z_y(s)x^s\,ds=\alpha\Psi(x,y)\Bigl(1+O\Bigl(\frac1u+\frac Sy\Bigr)\Bigr),
+  \]
+  and the same bound holds for $\frac1{2\pi}\int_{I_0}|Z_y(s)x^s|\,|ds|$.
+\item[(I6)] Let $z\ge2$, $0<e<1/10$, $0<\eta\le1/2$, and suppose $\zeta$ has no zeros in
+  $\{\operatorname{Re}s>1-\eta,\ |\operatorname{Im}s-t|<10z^\eta\}$. Then for $s=a+it\neq1$ with
+  $1-(1-e)\eta\le a<1+1/\log z$,
+  \begin{multline*}
+  \Bigl|\sum_{n\le z}\frac{\Lambda(n)}{n^s}\Bigr|\le\frac{z^{1-a}+1}{|1-s|}+O_e\bigl((\log(|t|+2))^b\bigr)
+  +O\bigl((\log z)^2z^{-e\eta}\bigr)\\
+  +O_e\Bigl(\bigl((\log(|t|+z^\eta+2))^b+\tfrac1\eta\bigr)\log(z^\eta/\eta)\,z^{-e\eta/2}\Bigr),
+  \end{multline*}
+  with $b=b(e)<1$ and constants uniform in the other parameters~\cite[Lemma~2.3]{You24}.
+\item[(I7)] For every $\mu>0$, $N(\sigma,T)\le C_\mu T^{30(1-\sigma)/13+\mu}$ for $\tfrac12\le\sigma\le1$,
+  $T\ge2$~\cite[(1.4)]{GM24}.
+\end{itemize}
+
+\paragraph{Parameters.}
+Fix $\delta,\theta$ and $K>K^*$. For small $\varepsilon,\varepsilon_1,\mu,\varepsilon_0>0$ put
+$\tau=1-\theta+1/K+\varepsilon_1$, $g=(1-\varepsilon)^2-\varepsilon_0-\tfrac{30}{13}\tau$,
+$\Xi_Z=\delta g-(1-\varepsilon)(1/K+\varepsilon_1)-\mu$ and
+$\Xi_R=\theta-\tfrac12-\tfrac2K-2\varepsilon_1-\varepsilon$. At zero small parameters,
+$\Xi_Z=[\delta(30\theta-17)-(13+30\delta)/K]/13>0$, which is $K>K^*$, and $\Xi_R=\theta-\tfrac12-2/K>0$ because
+$K^*\ge56/(30\theta-17)>2/(\theta-\tfrac12)$. Fix $0<\varepsilon_0\le\varepsilon_1\le\varepsilon<1/12$ and
+$\mu\le1/10$ with $\Xi_Z,\Xi_R>0$, and put $\kappa=\tfrac12\min(\Xi_Z,\Xi_R,\varepsilon_1/2)$. Then
+$1/K+\varepsilon_1<(1-\varepsilon)\delta$. Let $x$ be large, $x^\theta\le h\le x$,
+$(\log x)^K\le y\le x^{\varepsilon_0}$, and set $H=x^{1+1/K+\varepsilon_1}/h$, $T=H+10\sqrt y$,
+$\sigma_{\mathrm R}=(1+\varepsilon)/2$, $D=D_0/L$ with $D_0=\max(8/\varepsilon,1/(c_*\log2))$, $t_0=Dy^{a_0}$ and
+$t^*=Dy^{(1-\varepsilon)/2}$. For large $x$:
+\begin{itemize}
+\item[(P1)] $0<a_0\le1/K+\varepsilon_1/2$ ($\alpha$ increases with $y$, and (I2) at $y=(\log x)^K$);
+\item[(P2)] $S\le\varepsilon_0L$, $x^{1/K+\varepsilon_1}\le H\le x^\tau$, $2\le T\le11x^\tau$;
+\item[(P3)] $\Psi(x,y)\ge x^{1-a_0}/(CL)$ and $W\le C\Psi(x,y)L$;
+\item[(P4)] $1\le D_0c_*\log(u+1)\le t_0S\le D_0C_*\log(u+1)$;
+\item[(P5)] $a_0<(1-\varepsilon)\delta$, hence $\alpha>\sigma_{\mathrm R}$.
+\end{itemize}
+
+\begin{lemma}[local shift for every $y$]\label{lem:shift}
+Fix $0<d\le\tfrac12$ and $0<e<1/10$. For $x\ge X_0(d,e)$, every $2\le y\le x$ and $d\le\eta\le\tfrac12$: let
+$1-(1-e)\eta\le\sigma_1<\sigma_2<1+1/\log y$ and $0<|t|\le x$, suppose $\zeta$ has no zeros in
+$\{\operatorname{Re}s>1-\eta,|\operatorname{Im}s-t|<10y^\eta\}$ and $|t|\ge\frac4{eL}(y^{1-\sigma_1}+1)$. Then
+$|x^{\sigma_1+it}Z_y(\sigma_1+it)|\le x^{-(1-e)(\sigma_2-\sigma_1)}|x^{\sigma_2+it}Z_y(\sigma_2+it)|$.
+\end{lemma}
+
+\begin{proof}
+For $\sigma_1\le a\le\sigma_2$ apply (I6) with $z=y$. The first term is at most
+$(y^{1-\sigma_1}+1)/|t|\le eL/4$. The second is $O_e((2L)^b)$. The third is
+$(\log y)^2y^{-e\eta}=w^2e^{-e\eta w}$ with $w=\log y$, at most $4/(e\eta\,\mathrm e)^2\le4/(ed)^2$ for every
+$y\ge2$. In the fourth, $\log(|t|+y^\eta+2)\le2L$, $1/\eta\le1/d$ and
+$\log(y^\eta/\eta)y^{-e\eta/2}\le2/(e\,\mathrm e)+\log(1/d)$, so it is $O_{d,e}(L^b+1)$. As $b<1$, the
+total is at most $eL/2$ for large $x$. Since $-Z_y'/Z_y(s)=\sum_{n\le y}\Lambda(n)n^{-s}+R_y(s)$ with
+$|R_y(s)|\le\sum_q(\log q)q^{-2a}/(1-q^{-a})=O_e(1)$ for $a\ge(1+e)/2$, we get $|Z_y'/Z_y(a+it)|\le eL$, and
+integrating $\partial_a\log|Z_y(a+it)|$ from $\sigma_1$ to $\sigma_2$ gives the claim.
+\end{proof}
+
+\paragraph{The contour.}
+Let $\mathcal Z_T$ be the zeros $\rho=1-\nu+i\gamma$ with $\nu\le\tfrac12$ and $|\gamma|\le T$; by hypothesis
+$\nu\ge\delta$. For $t\in\mathbb R$ let $\sigma_0(t)=\alpha$ for $|t|\le t_0$, $\sigma_0(t)=1-\log(|t|/D)/S$ for
+$t_0\le|t|\le t^*$ and $\sigma_0(t)=\sigma_{\mathrm R}$ beyond; and for $\rho\in\mathcal Z_T$ let
+$\sigma_\rho(t)=1-(1-\varepsilon)\nu$ for $|t-\gamma|\le10y^\nu$,
+$\sigma_\rho(t)=1-(1-\varepsilon)\log(|t-\gamma|/10)/S$ for $10y^\nu\le|t-\gamma|\le10\sqrt y$ and
+$\sigma_\rho(t)=\sigma_{\mathrm R}$ beyond. Put $\sigma_\Gamma=\max(\sigma_0,\max_\rho\sigma_\rho)$,
+$\Gamma=\{\sigma_\Gamma(t)+it:|t|\le H\}$, and let $C_\pm$ be the horizontal segments from $\Gamma$ to
+$\alpha\pm iH$. By (P5), $\sigma_\rho\le1-(1-\varepsilon)\delta<\alpha$, so $\sigma_\Gamma\le\alpha$ with
+equality exactly for $|t|\le t_0$; and $t_0\ge1/S$ by (P4).
+
+\begin{lemma}\label{lem:pointwise}
+For $|t|\le H$ and $\sigma_\Gamma(t)\le\sigma<\alpha$:
+\[
+|x^{\sigma+it}Z_y(\sigma+it)|\le x^{-(1-\varepsilon)(\alpha-\sigma)}\,|x^{\alpha+it}Z_y(\alpha+it)|
+\le x^{-(1-\varepsilon)(\alpha-\sigma)}W .
+\]
+\end{lemma}
+
+\begin{proof}
+Let $\eta=\max(\delta,(1-\sigma)/(1-\varepsilon))\le\tfrac12$. No zero lies in
+$\{\operatorname{Re}s>1-\eta,|\operatorname{Im}s-t|<10y^\eta\}$: for $\eta=\delta$ this is the hypothesis;
+otherwise such a zero would be in $\mathcal Z_T$ and would force $\sigma_\rho(t)>\sigma$. Next,
+$\sigma<\alpha$ forces $|t|>t_0$, and then $Dy^{1-\sigma}\le|t|$ from the definition of $\sigma_0$ (using
+$\sigma\ge\sigma_{\mathrm R}$ beyond $t^*$), so $|t|\ge\frac8{\varepsilon L}y^{1-\sigma}\ge\frac4{\varepsilon L}(y^{1-\sigma}+1)$.
+Lemma~\ref{lem:shift} with $d=\delta$, $e=\varepsilon$, $\sigma_1=\sigma$, $\sigma_2=\alpha$ gives the first
+inequality, and $|Z_y(\alpha+it)|\le Z_y(\alpha)$ the second.
+\end{proof}
+
+For $\operatorname{Re}s\le1$ one has $|((x+h)^s-x^s)/s|\le r|x^s|$ and
+$|((x+h)^s-x^s)/s-rx^s|\le\tfrac12r^2|s-1||x^s|$; on $C_\pm$, $|((x+h)^s-x^s)/s|\le3|x^s|/H$.
+
+\begin{lemma}[zeros]\label{lem:zeros}
+$\sum_{\rho\in\mathcal Z_T}\int_{\Gamma\cap\Gamma_\rho}|x^sZ_y(s)||ds|\le CWx^{-\Xi_Z}\le C\Psi(x,y)x^{-\kappa}$,
+where $\Gamma_\rho$ is the part of the contour defined by $\sigma_\rho$.
+\end{lemma}
+
+\begin{proof}
+Let $c_1=(1-\varepsilon)^2-S/L\ge(1-\varepsilon)^2-\varepsilon_0$. On the vertical piece (length $20y^\nu$),
+Lemma~\ref{lem:pointwise} gives at most $20Wx^{(1-\varepsilon)a_0}x^{-c_1\nu}$. On the curved pieces,
+parametrised by $v\in[\nu,\tfrac12]$ with $|s'(v)|\le11Sy^v$, the integral is at most
+$11(S/((1-\varepsilon)^2L-S))Wx^{(1-\varepsilon)a_0}x^{-c_1\nu}\le11Wx^{(1-\varepsilon)a_0}x^{-c_1\nu}$. Group the
+zeros by $m=\lfloor\nu L\rfloor\ge\lfloor\delta L\rfloor=m_0$. By (I7) and (P2) there are at most
+$121C_\mu x^\mu e^{(30/13)\tau(m+1)}$ zeros with this $m$, each contributing at most $42Wx^{(1-\varepsilon)a_0}e^{-c_1m}$.
+Since $c_1-\tfrac{30}{13}\tau\ge g>0$, the sum over $m\ge m_0$ is
+$\le C(\mu,g)Wx^{(1-\varepsilon)a_0+\mu-g\delta}\le CWx^{-\Xi_Z}$ by (P1); finally $W\le C\Psi L$.
+\end{proof}
+
+\begin{lemma}[remainder line and connectors]\label{lem:remainder}
+The part of $\Gamma$ on $\operatorname{Re}s=\sigma_{\mathrm R}$ contributes at most $2Wx^{-\Xi_R}\le C\Psi x^{-\kappa}$, and
+$\int_{C_\pm}|x^sZ_y(s)||ds|\le W/((1-\varepsilon)L)\le C\Psi/\sqrt u$.
+\end{lemma}
+
+\begin{proof}
+On $\operatorname{Re}s=\sigma_{\mathrm R}$, Lemma~\ref{lem:pointwise} gives
+$|x^sZ_y|\le Wx^{-(1-\varepsilon)(\alpha-\sigma_{\mathrm R})}$ with $(1-\varepsilon)(\alpha-\sigma_{\mathrm R})\ge\tfrac12-\varepsilon-1/K-\varepsilon_1$, over length $\le2x^\tau$; the exponent is
+$-\Xi_R$. On $C_\pm$, $\int_{-\infty}^\alpha x^{-(1-\varepsilon)(\alpha-\sigma)}d\sigma=1/((1-\varepsilon)L)$, and
+$W/L\le C\Psi\sqrt{S/L}$ by (I1).
+\end{proof}
+
+\begin{lemma}[central tails and curves]\label{lem:central}
+Let $\Gamma_0^\pm$ be the exponential paths $\{1-v\pm iDy^v:a_0\le v\le(1-\varepsilon)/2\}$. Then
+\[
+\int_{\substack{s=\alpha+it\\1/S<|t|\le t_0}}|x^sZ_y(s)|\,|ds|+\int_{\Gamma\cap\Gamma_0^\pm}|x^sZ_y(s)|\,|ds|
+\le C\,\frac{\Psi(x,y)}u .
+\]
+\end{lemma}
+
+\begin{proof}
+For $1/S<|t|\le t_0$, (I3) applies and $t^2/(a_0^2+t^2)\ge c/(\log(u+1))^2$ by (I2), so with (P4) and (I1)
+the tail is at most $CD_0\Psi\sqrt u\log(u+1)e^{-cu/\log^2(u+1)}\le C'\Psi/u$. On $\Gamma_0^\pm$, $|t|\ge t_0$
+gives $t^2/(a_0^2+t^2)\ge c$ and (I3) gives $|Z_y(\alpha+it)|\le Ce^{-cu}Z_y(\alpha)$; combining this with the first
+inequality of Lemma~\ref{lem:pointwise} and $|s'(v)|\le2DSy^v$ the curves contribute at most
+$CWe^{-cu}D_0\log(u+1)/L\le C'\Psi/u$.
+\end{proof}
+
+\paragraph{Assembly.}
+Let $\Gamma'=\Gamma\setminus I_0$. By (I4) and Cauchy's theorem,
+\[
+\Psi(x+h,y)-\Psi(x,y)=\frac1{2\pi i}\Bigl(\int_{I_0}+\int_{\Gamma'}+\int_{C_-}+\int_{C_+}\Bigr)
+Z_y(s)\frac{(x+h)^s-x^s}{s}\,ds+O\Bigl(\frac{xL}H\Bigr).
+\]
+By (I5) in both forms and $\max|s-1|\le a_0+1/S$ on the central
+segment, the central part is $\alpha r\Psi(1+O(1/u))+\vartheta\tfrac12r^2(a_0+1/S)\alpha\Psi(1+O(1/u))$ with
+$|\vartheta|\le1$. Lemmas~\ref{lem:zeros}--\ref{lem:central} bound the rest of $\Gamma$ by
+$Cr\Psi(1/u+x^{-\kappa})$; the connectors give $Cr\Psi x^{-1/K-\varepsilon_1}/\sqrt u$ since $1/H=rx^{-1/K-\varepsilon_1}$;
+and $xL/H=rx^{1-1/K-\varepsilon_1}L\le Cr\Psi L^2x^{a_0-1/K-\varepsilon_1}\le Cr\Psi x^{-\kappa}$ by (P1), (P3).
+Dividing by $\alpha r\Psi$ (with $\alpha\ge\tfrac12$ and $x^{-\kappa}\le1/u$),
+\[
+\Bigl|\frac{\Psi(x+h,y)-\Psi(x,y)}{\alpha r\Psi(x,y)}-1\Bigr|\le\frac{C_1}u+\frac r2(a_0+1/S)\Bigl(1+\frac{C_1}u\Bigr),
+\]
+which gives \eqref{eq:asym} since $a_0+1/S\le(C_*+2)\log(u+1)/S$. For the lower bound,
+$a_0+1/S\le1/K+\varepsilon_1<\tfrac12$, so the right side is at most $\tfrac12$ once $u\ge5C_1$, which holds after
+decreasing $\varepsilon_0$; and $\alpha\ge1-1/K-\varepsilon_1\ge\tfrac23$. \qed
+
+\paragraph{Constants.}
+For $\theta=3/4$ and $\delta=1/8$ one gets $K^*=268/11<25$, the value $K_0=25$ of
+Proposition~\ref{prop:goodcurve}. The half-planes $\operatorname{Re}s>11/12$~\cite{Kon26} and
+$\operatorname{Re}s>31/32$~\cite{CT26} give $K_0=34$ and $K_0=82$. With a zero-density exponent $A$ in place of
+Guth and Maynard's $30/13$, the threshold is $K^*_A=(1+A\delta)/(\delta(1-A(1-\theta)))$.
+
+\paragraph{Under the Riemann Hypothesis.}
+All zeros then lie on $\operatorname{Re}s=\tfrac12$, every $\Gamma_\rho$ lies on the remainder line,
+Lemma~\ref{lem:zeros} is void, and only $\Xi_R>0$, (P5) and the Perron step are used: $K>2/(\theta-\tfrac12)$
+suffices, that is $K=9$ for $\theta=3/4$, which makes the constant of Younis~\cite[Thm.~1.3]{You24} explicit in
+this range.
+
+\section{Computing the group without advice}\label{app:basis}
+Let $f$ be a monic quintic with non-zero discriminant such that $N=\#J_f(\F_p)$ is $y$-smooth, and factor $N$
+by trial division up to $y$. Draw a monic quadratic $u$ uniformly, let $m(u)\in\{0,1,2,4\}$ be the number of $v$ with
+$\deg v\le1$ and $v^2\equiv f\pmod u$ (computed with square roots in $\F_p$ or $\F_{p^2}$), accept with
+probability $m(u)/4$ and output a uniform one of these $v$. Every class with $\deg u=2$ is output with the
+same probability, and the remaining classes, at most $p+4\sqrt p+1$ of them, form an $O(1/p)$ fraction of
+$J_f(\F_p)$. Six such samples generate $J_f(\F_p)$ with probability at least $0.29-O(1/p)$, by Pomerance's
+bound for groups of rank at most four~\cite{Pom02} as used in~\cite[\S7]{KMS10}. Teske's
+algorithm~\cite[Thm.~6.1]{Tes99}, in the form of Sutherland~\cite[\S1]{Sut11}, turns them into a basis: for a
+$q$-group of rank $m\le4$ it costs $\ell^{O(1)}q^{m/2}\le\ell^{O(1)}q^2$ group operations, so $\ell^{O(1)}y^2$ in
+all; the algorithm checks that the basis has order $N$, and draws again otherwise.

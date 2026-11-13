@@ -1,0 +1,74 @@
+\section{Fewer advice bits, and none}\label{sec:fewer}
+
+The advice in Theorem~\ref{thm:main} is only a pointer to one good curve. Good curves are not rare, which
+gives the three variants below.
+
+\begin{lemma}\label{lem:density}
+Let $K\ge K_0$ and $y=(\log x)^K$ as in Proposition~\ref{prop:goodcurve}. For large $p$, a uniformly random
+coefficient vector $(a_0,\dots,a_5)\in\F_p^6$ defines a quintic $f=\sum a_iX^i$ with non-zero discriminant and
+$y$-smooth $\#J_f(\F_p)$ with probability at least $p^{-2/K-o(1)}$.
+\end{lemma}
+
+\begin{proof}
+At least $S_p-p\ge S_p/2$ of the $y$-smooth integers in the window avoid the exceptional set of
+Theorem~\ref{thm:lpp}, and each is the order of at least $p^{9/2}/(24000\log(p^2)\log\log(p^2))$ quintics;
+distinct orders give disjoint sets of quintics. Divide by $p^6$ and use $S_p\ge p^{3/2-2/K-o(1)}$.
+\end{proof}
+
+Without advice the algorithm computes $N=\#J_f(\F_p)$ by Pila's algorithm~\cite{Pil90,AH01} in time
+$\ell^{O(1)}$, and a basis of $J_f(\F_p)$ in time $\ell^{O(1)}y^2$ from random elements
+(Appendix~\ref{app:basis}).
+
+\begin{theorem}[Polynomial time with $\varepsilon\ell$ yes/no queries]\label{thm:eps}
+For every $0<\varepsilon\le1$ there is $c_\varepsilon$ such that, with at most $\varepsilon\ell$ queries to an oracle answering arbitrary yes/no questions, discrete
+logarithms in groups of prime order $p$ are computed from a Diffie--Hellman oracle in expected time
+$O(\ell^{c_\varepsilon})$ with failure probability at most $p^{-\varepsilon/2}$.
+\end{theorem}
+
+\begin{proof}
+Take $K\ge\max(K_0,\lceil8/\varepsilon\rceil)$, so that a random coefficient vector is good with probability
+$\lambda_p\ge p^{-\varepsilon/4-o(1)}$ by Lemma~\ref{lem:density}. Following~\cite[\S7]{KMS10} and Chor and
+Goldreich~\cite{CG89}, identify $\F_p^6$ with $\F_{p^6}$, order it as $w_1,w_2,\dots$, draw $s,t\in\F_{p^6}$
+and consider the pairwise independent samples $sw_j+t$, $j\le M=2^{\lfloor\varepsilon\ell\rfloor}$. By
+Chebyshev's inequality none is good with probability at most $1/(M\lambda_p)\le p^{-\varepsilon/2}$ for large
+$p$. The oracle supplies the $\lfloor\varepsilon\ell\rfloor$ bits of the least good index. The algorithm
+then computes $N$ and a basis as above, and runs Steps 1--3 of Section~\ref{sec:reduction} in time
+$\ell^{O(K)}$.
+\end{proof}
+
+Koblitz, Menezes and Shparlinski proved Theorem~\ref{thm:eps} under a conjecture on smooth numbers in short
+intervals~\cite[Thm.~5]{KMS10}, and with time $L_p(\tfrac12)$ instead of polynomial under the Riemann
+Hypothesis~\cite[Thm.~4]{KMS10}.
+
+\begin{corollary}[One precomputation per prime]\label{cor:precomp}
+For every $\varepsilon>0$ there is a uniform probabilistic algorithm in two phases. The first phase gets only
+$p$, uses no group and no oracle, runs in expected time $p^{\varepsilon}\ell^{O(1)}$ and outputs a string
+$\sigma_p$ of $O(\ell)$ bits, which anyone can check in time $\ell^{O(1/\varepsilon)}$. The second phase, given $\sigma_p$, any group $G$ of order $p$, a
+Diffie--Hellman oracle for it and $g^a$, returns $a$ in expected time $\ell^{O(1/\varepsilon)}$.
+\end{corollary}
+
+\begin{proof}
+Put $K=\max(K_0,\lceil4/\varepsilon\rceil)$. By Lemma~\ref{lem:density} a random coefficient vector is good with
+probability at least $p^{-\varepsilon/2-o(1)}$. The first phase draws vectors, computes $\#J_f(\F_p)$ by Pila's
+algorithm and tests $y$-smoothness by trial division, both in time $\ell^{O(1)}$ since $y\le(2\ell)^K$, until it
+succeeds; after $p^\varepsilon$ failed draws it falls back to exhaustive search, which also covers the
+finitely many small primes. It then computes a basis and a non-residue as above and outputs $\sigma_p$. The
+second phase is Steps 1--3 of Section~\ref{sec:reduction}, in time $\ell^{4K+3}$.
+\end{proof}
+
+\begin{theorem}[No advice]\label{thm:uniform}
+A probabilistic algorithm with a Diffie--Hellman oracle computes discrete logarithms in groups of prime order $p$ with unique element
+encodings in expected time $L_p(\tfrac12,2)$, and in time $L_p(\tfrac12,\sqrt2)$ with batch smoothness
+testing.
+\end{theorem}
+
+\begin{proof}
+Take $y=\exp(c_0\sqrt{\log p\log\log p})$. Then $u\log u=(1/c_0+o(1))\sqrt{\log p\log\log p}$, and
+Theorem~\ref{thm:smooth} together with Hildebrand's $\Psi(x,y)=x\rho(u)(1+o(1))$~\cite{Hil86} gives
+$S_p\ge p^{3/2}\rho(u)^{1+o(1)}$, so a random coefficient vector is good with probability
+$\rho(u)^{1+o(1)}=L_p(\tfrac12,1/c_0)^{-1}$. Draw vectors until one is good, testing smoothness of
+$\#J_f(\F_p)$ by trial division in time $y\,\ell^{O(1)}$ per draw. Then compute $N$ and a basis in time
+$\ell^{O(1)}y^2$ as above. Steps 1--3 with baby-step giant-step on each layer of Lemma~\ref{lem:ph} cost $q^2$
+operations per layer, $(2\ell+1)y^2$ in all. With $c_0=1$ the total is $L_p(\tfrac12,2)$. A batch smoothness test~\cite{Ber04} makes each draw cost $\ell^{O(1)}$ amortised; then
+the total is $L_p(\tfrac12,\max(1/c_0,2c_0))$, which is $L_p(\tfrac12,\sqrt2)$ at $c_0=1/\sqrt2$.
+\end{proof}
